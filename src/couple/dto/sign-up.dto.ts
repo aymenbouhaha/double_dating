@@ -1,5 +1,5 @@
 import {PersonDto} from "./person.dto";
-import {IsDate, IsDateString, IsEmail, IsNotEmpty, IsNotEmptyObject, IsString} from "class-validator";
+import {IsDateString, IsEmail, IsNotEmpty, IsNotEmptyObject, IsString} from "class-validator";
 
 export class SignUpDto {
 

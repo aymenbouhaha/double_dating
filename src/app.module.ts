@@ -25,6 +25,9 @@ import {PostEntity} from "./models/post.entity";
 import {RequestEntity} from "./models/request.entity";
 import {MessageEntity} from "./models/message.entity";
 import {ConfigModule} from "@nestjs/config";
+import {DateScheduleEntity} from "./models/date-schedule.entity";
+import {DateRequestEntity} from "./models/date-request.entity";
+import {NotificationEntity} from "./models/notification.entity";
 
 @Module({
   imports: [
@@ -59,7 +62,10 @@ import {ConfigModule} from "@nestjs/config";
           PersonEntity,
           MessageEntity,
           PostEntity,
-          RequestEntity
+          RequestEntity,
+          DateScheduleEntity,
+          DateRequestEntity,
+          NotificationEntity
       ],
       synchronize: true,
     })

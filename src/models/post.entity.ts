@@ -16,7 +16,7 @@ export class PostEntity {
     creationDate : Date
 
     @ManyToOne(
-        type => CoupleEntity,
+        () => CoupleEntity,
         (couple) => couple.posts
     )
     owner : CoupleEntity
