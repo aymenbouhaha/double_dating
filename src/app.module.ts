@@ -28,6 +28,8 @@ import {ConfigModule} from "@nestjs/config";
 import {DateScheduleEntity} from "./models/date-schedule.entity";
 import {DateRequestEntity} from "./models/date-request.entity";
 import {NotificationEntity} from "./models/notification.entity";
+import { DateScheduleModule } from './date-schedule/date-schedule.module';
+import { DateRequestModule } from './date-request/date-request.module';
 
 @Module({
   imports: [
@@ -68,7 +70,9 @@ import {NotificationEntity} from "./models/notification.entity";
           NotificationEntity
       ],
       synchronize: true,
-    })
+    }),
+    DateScheduleModule,
+    DateRequestModule
   ],
   controllers: [AppController],
   providers: [AppService],
