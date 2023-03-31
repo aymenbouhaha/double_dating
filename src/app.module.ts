@@ -17,8 +17,7 @@ import {ConversationEntity} from "./models/conversation.entity";
 import {CoupleEntity} from "./models/couple.entity";
 import {GroupConversationEntity} from "./models/group-conversation.entity";
 import {GroupMessageEntity} from "./models/group-message.entity";
-import {ImageEntity} from "./models/image.entity";
-import {VideoEntity} from "./models/video.entity";
+import {MediaEntity} from "./models/media.entity";
 import {InterestEntity} from "./models/interest.entity";
 import {PersonEntity} from "./models/person.entity";
 import {PostEntity} from "./models/post.entity";
@@ -30,6 +29,10 @@ import {DateRequestEntity} from "./models/date-request.entity";
 import {NotificationEntity} from "./models/notification.entity";
 import { DateScheduleModule } from './date-schedule/date-schedule.module';
 import { DateRequestModule } from './date-request/date-request.module';
+import {GroupMessageAttachmentEntity} from "./models/group-message-attachment.entity";
+import {MessageAttachmentEntity} from "./models/message-attachment.entity";
+import {GroupPictureEntity} from "./models/group-picture.entity";
+import {ProfilePictureEntity} from "./models/profile-picture.entity";
 
 @Module({
   imports: [
@@ -58,8 +61,7 @@ import { DateRequestModule } from './date-request/date-request.module';
           CoupleEntity,
           GroupConversationEntity,
           GroupMessageEntity,
-          ImageEntity,
-          VideoEntity,
+          MediaEntity,
           InterestEntity,
           PersonEntity,
           MessageEntity,
@@ -67,7 +69,11 @@ import { DateRequestModule } from './date-request/date-request.module';
           RequestEntity,
           DateScheduleEntity,
           DateRequestEntity,
-          NotificationEntity
+          NotificationEntity,
+          GroupMessageAttachmentEntity,
+          MessageAttachmentEntity,
+          GroupPictureEntity,
+          ProfilePictureEntity
       ],
       synchronize: true,
     }),

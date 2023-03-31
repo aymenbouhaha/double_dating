@@ -1,6 +1,7 @@
 import {Column, Entity, JoinColumn, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {GroupMessageEntity} from "./group-message.entity";
 import {CoupleEntity} from "./couple.entity";
+import {GroupPictureEntity} from "./group-picture.entity";
 
 @Entity("group_conversation")
 export class GroupConversationEntity {
@@ -10,11 +11,6 @@ export class GroupConversationEntity {
 
     @Column()
     name : string
-
-    @Column({
-        unique : true
-    })
-    groupPicture : string
 
     @OneToMany(
         ()=>GroupMessageEntity,
@@ -35,5 +31,8 @@ export class GroupConversationEntity {
     @JoinColumn()
     lastMessage : GroupMessageEntity
 
-
+    @OneToOne(
+        ()=>GroupPictureEntity
+    )
+    groupPicture : GroupPictureEntity
 }

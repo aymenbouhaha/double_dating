@@ -1,7 +1,6 @@
 import {Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {CoupleEntity} from "./couple.entity";
-import {ImageEntity} from "./image.entity";
-import {VideoEntity} from "./video.entity";
+import {MediaEntity} from "./media.entity";
 
 @Entity("post")
 export class PostEntity {
@@ -22,16 +21,10 @@ export class PostEntity {
     owner : CoupleEntity
 
     @OneToMany(
-        ()=>ImageEntity,
+        ()=>MediaEntity,
         (img)=>img.post
     )
-    images : ImageEntity[]
-
-    @OneToMany(
-        ()=>VideoEntity,
-        (vd)=>vd.post
-    )
-    videos : VideoEntity[]
+    medias : MediaEntity[]
 
 
 

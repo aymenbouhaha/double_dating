@@ -1,6 +1,7 @@
-import {Entity, ManyToOne} from "typeorm";
+import {Entity, ManyToOne, OneToMany} from "typeorm";
 import {ConversationEntity} from "./conversation.entity";
 import {GeneralMessage} from "./general-message";
+import {MessageAttachmentEntity} from "./message-attachment.entity";
 
 @Entity("message")
 export class MessageEntity extends GeneralMessage{
@@ -12,6 +13,11 @@ export class MessageEntity extends GeneralMessage{
     conversation : ConversationEntity
 
 
+    @OneToMany(
+        ()=>MessageAttachmentEntity,
+        msgAtt=>msgAtt.message
+    )
+    attachment : MessageAttachmentEntity[]
 
 }
 

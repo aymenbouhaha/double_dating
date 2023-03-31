@@ -5,6 +5,7 @@ import {CommentEntity} from "./comment.entity";
 import {ConversationEntity} from "./conversation.entity";
 import {GroupConversationEntity} from "./group-conversation.entity";
 import {InterestEntity} from "./interest.entity";
+import {ProfilePictureEntity} from "./profile-picture.entity";
 
 @Entity("couple")
 export class CoupleEntity {
@@ -51,8 +52,15 @@ export class CoupleEntity {
     @JoinColumn()
     secondPartner : PersonEntity
 
+
+    @OneToOne(
+        ()=>ProfilePictureEntity
+    )
+    @JoinColumn()
+    profilePicture : ProfilePictureEntity
+
     @Column()
-    profilePicture : string
+    verificationCode : string
 
     @ManyToMany(
         () => CoupleEntity
