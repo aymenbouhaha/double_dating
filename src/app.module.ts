@@ -33,6 +33,7 @@ import {GroupMessageAttachmentEntity} from "./models/group-message-attachment.en
 import {MessageAttachmentEntity} from "./models/message-attachment.entity";
 import {GroupPictureEntity} from "./models/group-picture.entity";
 import {ProfilePictureEntity} from "./models/profile-picture.entity";
+import { GatewayModule } from './gateway/gateway.module';
 
 @Module({
   imports: [
@@ -78,7 +79,8 @@ import {ProfilePictureEntity} from "./models/profile-picture.entity";
       synchronize: true,
     }),
     DateScheduleModule,
-    DateRequestModule
+    DateRequestModule,
+    GatewayModule
   ],
   controllers: [AppController],
   providers: [AppService],
