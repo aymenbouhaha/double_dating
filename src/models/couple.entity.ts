@@ -34,6 +34,14 @@ export class CoupleEntity {
     @Column()
     anniversary : Date
 
+    @Column({
+        type : "bool"
+    })
+    connected : boolean
+
+    @Column()
+    verificationCode : string
+
     @OneToOne(
         () => PersonEntity,
         {
@@ -59,8 +67,7 @@ export class CoupleEntity {
     @JoinColumn()
     profilePicture : ProfilePictureEntity
 
-    @Column()
-    verificationCode : string
+
 
     @ManyToMany(
         () => CoupleEntity
