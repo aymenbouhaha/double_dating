@@ -35,12 +35,17 @@ export class CoupleEntity {
     anniversary : Date
 
     @Column({
-        type : "bool"
+        type : "boolean"
     })
     connected : boolean
 
     @Column()
     verificationCode : string
+
+    @Column({
+        type :"boolean"
+    })
+    verified : boolean
 
     @OneToOne(
         () => PersonEntity,

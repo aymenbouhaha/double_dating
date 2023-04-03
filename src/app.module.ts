@@ -23,7 +23,7 @@ import {PersonEntity} from "./models/person.entity";
 import {PostEntity} from "./models/post.entity";
 import {RequestEntity} from "./models/request.entity";
 import {MessageEntity} from "./models/message.entity";
-import {ConfigModule} from "@nestjs/config";
+import {ConfigModule, ConfigService} from "@nestjs/config";
 import {DateScheduleEntity} from "./models/date-schedule.entity";
 import {DateRequestEntity} from "./models/date-request.entity";
 import {NotificationEntity} from "./models/notification.entity";
@@ -34,7 +34,11 @@ import {MessageAttachmentEntity} from "./models/message-attachment.entity";
 import {GroupPictureEntity} from "./models/group-picture.entity";
 import {ProfilePictureEntity} from "./models/profile-picture.entity";
 import { GatewayModule } from './gateway/gateway.module';
+import {MailerModule} from "@nestjs-modules/mailer";
+import * as dotenv from 'dotenv';
 
+
+dotenv.config()
 @Module({
   imports: [
       ConfigModule.forRoot({
@@ -49,6 +53,17 @@ import { GatewayModule } from './gateway/gateway.module';
     GroupMessageModule,
     CommentModule,
     InterestModule,
+      MailerModule.forRoot(
+          {
+              transport: {
+                  service: "hotmail",
+                  auth: {
+                      user: process.env.MAIL_USER,
+                      pass: process.env.MAIL_PASSWORD,
+                  },
+              },
+          }
+      ),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',

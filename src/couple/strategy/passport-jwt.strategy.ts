@@ -6,6 +6,7 @@ import {PayloadInterface} from "../interface/payload.interface";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
 import {CoupleEntity} from "../../models/couple.entity";
+import {UserNotVerifiedException} from "../exception/user-not-verified.exception";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -22,13 +23,17 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     }
 
     async validate(payload: PayloadInterface) {
-        const user = null
+        const user = await this.coupleRepository.findOneBy({
+            email : payload.email
+        })
         if (!user) {
             throw new UnauthorizedException()
         }else {
+            // if (!user.verified){
+            //     throw new UserNotVerifiedException()
+            // }
             const { password , salt , ...result}=user
             return result;
         }
-
     }
 }
