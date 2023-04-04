@@ -1,6 +1,6 @@
 import {Entity, ManyToOne} from "typeorm";
 import {DoubleDate} from "./double-date";
-import {CoupleEntity} from "./couple.entity";
+import {CoupleEntity} from "../couple.entity";
 
 
 @Entity("date_request")

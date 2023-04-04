@@ -5,7 +5,8 @@ import {CommentEntity} from "./comment.entity";
 import {ConversationEntity} from "./conversation.entity";
 import {GroupConversationEntity} from "./group-conversation.entity";
 import {InterestEntity} from "./interest.entity";
-import {ProfilePictureEntity} from "./profile-picture.entity";
+import {ProfilePictureEntity} from "./media/profile-picture.entity";
+import {Exclude} from "class-transformer";
 
 @Entity("couple")
 export class CoupleEntity {
@@ -26,9 +27,11 @@ export class CoupleEntity {
     email : string
 
     @Column()
+    @Exclude()
     password : string
 
     @Column()
+    @Exclude()
     salt :string
 
     @Column()
@@ -65,20 +68,11 @@ export class CoupleEntity {
     @JoinColumn()
     secondPartner : PersonEntity
 
-
     @OneToOne(
         ()=>ProfilePictureEntity
     )
     @JoinColumn()
     profilePicture : ProfilePictureEntity
-
-
-
-    @ManyToMany(
-        () => CoupleEntity
-    )
-    @JoinTable()
-    friends : CoupleEntity[]
 
     @OneToMany(
         () => PostEntity,
@@ -108,13 +102,17 @@ export class CoupleEntity {
         ()=>GroupConversationEntity,
         (grp)=>grp.participants
     )
-    @JoinTable()
+    @JoinTable({
+        name : "groups"
+    })
     groupConversation : GroupConversationEntity[]
 
     @ManyToMany(
         ()=>InterestEntity,
         (interest)=>interest.couples
     )
-    @JoinTable()
+    @JoinTable({
+        name : "interests"
+    })
     interest : InterestEntity[]
 }

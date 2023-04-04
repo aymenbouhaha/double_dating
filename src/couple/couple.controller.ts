@@ -1,4 +1,4 @@
-import {Body, Controller, Patch, Post, UseGuards} from '@nestjs/common';
+import {Body, Controller, Get, Patch, Post, UseGuards} from '@nestjs/common';
 import { CoupleService } from './couple.service';
 import {SignUpDto} from "./dto/sign-up.dto";
 import {LoginDto} from "./dto/login.dto";
@@ -27,4 +27,6 @@ export class CoupleController {
   verifyAccount(@Couple() couple : Partial<CoupleEntity>,@Body() verifyCredentials : VerifyCodeDto){
     return this.coupleService.verifyAccount(couple,verifyCredentials)
   }
+
+
 }

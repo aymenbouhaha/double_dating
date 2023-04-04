@@ -1,7 +1,7 @@
 import {Column, Entity, JoinColumn, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
-import {GroupMessageEntity} from "./group-message.entity";
+import {GroupMessageEntity} from "./messages/group-message.entity";
 import {CoupleEntity} from "./couple.entity";
-import {GroupPictureEntity} from "./group-picture.entity";
+import {GroupPictureEntity} from "./media/group-picture.entity";
 
 @Entity("group_conversation")
 export class GroupConversationEntity {

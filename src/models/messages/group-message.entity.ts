@@ -1,8 +1,8 @@
 import {GeneralMessage} from "./general-message";
 import {Entity, ManyToMany, ManyToOne, JoinTable, OneToMany} from "typeorm";
-import {GroupConversationEntity} from "./group-conversation.entity";
-import {CoupleEntity} from "./couple.entity";
-import {GroupMessageAttachmentEntity} from "./group-message-attachment.entity";
+import {GroupConversationEntity} from "../group-conversation.entity";
+import {CoupleEntity} from "../couple.entity";
+import {GroupMessageAttachmentEntity} from "../media/group-message-attachment.entity";
 
 
 @Entity("group_message")
@@ -19,7 +19,9 @@ export class GroupMessageEntity extends GeneralMessage{
     @ManyToMany(
         ()=>CoupleEntity
     )
-    @JoinTable()
+    @JoinTable({
+        name : "seen_by"
+    })
     seenBy : CoupleEntity[]
 
     @OneToMany(
@@ -27,5 +29,6 @@ export class GroupMessageEntity extends GeneralMessage{
         attch=>attch.groupMessage
     )
     attachment : GroupMessageAttachmentEntity[]
+
 
 }

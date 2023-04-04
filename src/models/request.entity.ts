@@ -1,4 +1,4 @@
-import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {CoupleEntity} from "./couple.entity";
 
 export enum RequestStatus {
@@ -22,7 +22,6 @@ export class RequestEntity {
         default : RequestStatus.pending
     })
     status : string
-
 
     @ManyToOne(
         ()=>CoupleEntity

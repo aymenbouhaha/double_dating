@@ -16,6 +16,7 @@ import {EmailNotSentException} from "./exception/email-not-sent.exception";
 import {VerifyCodeDto} from "./dto/verify-code.dto";
 import {VerificationFailedException} from "./exception/verification-failed.exception";
 
+
 @Injectable()
 export class CoupleService {
 
@@ -113,7 +114,11 @@ export class CoupleService {
                 throw new VerificationFailedException("Le code n'est pas correcte", HttpStatus.BAD_REQUEST)
             }
         }
-
     }
+
+    async findCoupleById(id : number){
+        return await this.coupleRepo.findOneBy({id : id})
+    }
+
 
 }
