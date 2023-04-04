@@ -1,6 +1,6 @@
 import {Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {CoupleEntity} from "./couple.entity";
-import {MediaEntity} from "./media.entity";
+import {MediaEntity} from "./media/media.entity";
 
 @Entity("post")
 export class PostEntity {

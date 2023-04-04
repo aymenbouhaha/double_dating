@@ -1,5 +1,5 @@
 import {Column, CreateDateColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import {CoupleEntity} from "./couple.entity";
+import {CoupleEntity} from "../couple.entity";
 
 export enum MessageStatus {
     seen = "seen",

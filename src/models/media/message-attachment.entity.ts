@@ -1,6 +1,6 @@
 import {Entity, ManyToOne} from "typeorm";
 import {BaseMedia} from "./base-media";
-import {MessageEntity} from "./message.entity";
+import {MessageEntity} from "../messages/message.entity";
 
 @Entity("message_attachment")
 export class MessageAttachmentEntity extends BaseMedia{

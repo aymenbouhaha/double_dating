@@ -25,6 +25,7 @@ dotenv.config()
     }),
   ],
   controllers: [CoupleController],
-  providers: [CoupleService, JwtStrategy, MailService]
+  providers: [CoupleService, JwtStrategy, MailService],
+  exports : [CoupleService]
 })
 export class CoupleModule {}

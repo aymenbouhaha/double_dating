@@ -1,7 +1,7 @@
 import {Entity, ManyToOne, OneToMany} from "typeorm";
-import {ConversationEntity} from "./conversation.entity";
+import {ConversationEntity} from "../conversation.entity";
 import {GeneralMessage} from "./general-message";
-import {MessageAttachmentEntity} from "./message-attachment.entity";
+import {MessageAttachmentEntity} from "../media/message-attachment.entity";
 
 @Entity("message")
 export class MessageEntity extends GeneralMessage{

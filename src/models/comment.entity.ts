@@ -28,7 +28,9 @@ export class CommentEntity {
     @ManyToMany(
         ()=>CommentEntity
     )
-    @JoinTable()
+    @JoinTable({
+        name : "responses"
+    })
     response: CommentEntity[]
 
 }

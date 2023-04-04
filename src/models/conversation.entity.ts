@@ -1,6 +1,6 @@
 import {Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {CoupleEntity} from "./couple.entity";
-import {MessageEntity} from "./message.entity";
+import {MessageEntity} from "./messages/message.entity";
 
 @Entity("conversation")
 export class ConversationEntity {
