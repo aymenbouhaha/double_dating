@@ -26,12 +26,12 @@ export class CoupleEntity {
     })
     email : string
 
-    @Column()
     @Exclude()
+    @Column()
     password : string
 
-    @Column()
     @Exclude()
+    @Column()
     salt :string
 
     @Column()
