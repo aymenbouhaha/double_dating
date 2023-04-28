@@ -9,6 +9,7 @@ import {PassportModule} from "@nestjs/passport";
 import {JwtStrategy} from "./strategy/passport-jwt.strategy";
 import {PersonEntity} from "../models/person.entity";
 import { MailService } from './mail/mail.service';
+import {PostModule} from "../post/post.module";
 
 dotenv.config()
 @Module({
@@ -24,8 +25,10 @@ dotenv.config()
       },
     }),
   ],
-  controllers: [CoupleController],
-  providers: [CoupleService, JwtStrategy, MailService],
+  controllers: [CoupleController]                       ,
+  providers: [CoupleService, JwtStrategy, MailService]  ,
   exports : [CoupleService]
 })
-export class CoupleModule {}
+export class CoupleModule {
+
+}

@@ -36,6 +36,7 @@ export class InvitationService {
         const newRequest = this.requestRepo.create({
             sender : sender,
             reciever : receiver,
+            //le statut est par defaut pending
             status : RequestStatus.pending
         })
         try {
@@ -64,6 +65,18 @@ export class InvitationService {
         )
     }
 
-
+    async respondToRequest(requestId : number,response : RequestStatus ) {
+        const request=await this.requestRepo.findOneById(requestId) ;
+        if(!request)
+            throw new BadRequestException("Une erreur s'est produite")
+        if(response=="declined")
+            return await this.requestRepo.remove(request) ;
+        if(response=="accepted")
+        {
+            await this.friendService.Createfriend(request.sender,request.reciever) ;
+            await this.requestRepo.remove(request)
+        }
+        return request ;
+    }
 
 }

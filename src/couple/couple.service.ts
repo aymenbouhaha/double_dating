@@ -116,9 +116,13 @@ export class CoupleService {
         }
     }
 
-    async findCoupleById(id : number){
+    async findCoupleById(id : number)
+    {
         return await this.coupleRepo.findOneBy({id : id})
     }
-
+    async saveCouple(couple: CoupleEntity)
+    {
+        return await this.coupleRepo.save(couple) ;
+    }
 
 }
