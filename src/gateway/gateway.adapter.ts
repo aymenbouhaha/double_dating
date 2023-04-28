@@ -25,6 +25,8 @@ export class GatewayAdapter extends IoAdapter{
                 try {
                     const decoded = verify(token,process.env.SECRET)
                     const couple=await coupleService.findCoupleById(decoded["id"])
+                    delete couple.password
+                    delete couple.salt
                     socket.couple=couple
                     next()
                 }catch (e){

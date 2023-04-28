@@ -1,4 +1,4 @@
-import {ConflictException, HttpStatus, Injectable} from '@nestjs/common';
+import {BadRequestException, ConflictException, HttpStatus, Injectable} from '@nestjs/common';
 import {SignUpDto} from "./dto/sign-up.dto";
 import {InjectRepository} from "@nestjs/typeorm";
 import {CoupleEntity} from "../models/couple.entity";
@@ -15,7 +15,8 @@ import {PasswordErrorException} from "./exception/password-error.exception";
 import {EmailNotSentException} from "./exception/email-not-sent.exception";
 import {VerifyCodeDto} from "./dto/verify-code.dto";
 import {VerificationFailedException} from "./exception/verification-failed.exception";
-
+import {ProfilePictureEntity} from "../models/media/profile-picture.entity";
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class CoupleService {
@@ -120,9 +121,22 @@ export class CoupleService {
     {
         return await this.coupleRepo.findOneBy({id : id})
     }
-    async saveCouple(couple: CoupleEntity)
+    async saveCouple(couple: Partial<CoupleEntity>)
     {
         return await this.coupleRepo.save(couple) ;
+    }
+
+    async addProfilePicture(couple : Partial<CoupleEntity>,file : Express.Multer.File){
+        if (!file){
+            throw new BadRequestException("You must choose a picture")
+        }
+        const profilePicure = new ProfilePictureEntity()
+        profilePicure.name=uuidv4()
+        profilePicure.data=file.buffer
+        profilePicure.type=file.mimetype
+        couple.profilePicture=profilePicure
+        await this.coupleRepo.save(couple)
+        return profilePicure
     }
 
 }

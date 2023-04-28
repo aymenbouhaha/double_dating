@@ -12,6 +12,8 @@ export interface CreateMessagePayload{
 
     recepient : Partial<CoupleEntity>
 
+    attachement : any
+
 }
 
 

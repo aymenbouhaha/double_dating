@@ -65,7 +65,11 @@ export class CoupleEntity {
     secondPartner : PersonEntity
 
     @OneToOne(
-        ()=>ProfilePictureEntity
+        ()=>ProfilePictureEntity,
+        {
+            eager : true,
+            cascade : true
+        }
     )
     @JoinColumn()
     profilePicture : ProfilePictureEntity
@@ -105,7 +109,10 @@ export class CoupleEntity {
 
     @ManyToMany(
         ()=>InterestEntity,
-        (interest)=>interest.couples
+        (interest)=>interest.couples,
+        {
+            eager : true
+        }
     )
     @JoinTable({
         name : "interests"

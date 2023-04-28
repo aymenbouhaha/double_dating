@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {Socket} from "socket.io";
 import {AuthSocket} from "./auth-socket";
+import {CoupleEntity} from "../models/couple.entity";
 
 @Injectable()
 export class GatewaySessionManager {
@@ -18,5 +19,15 @@ export class GatewaySessionManager {
     }
     getSockets(): Map<number, Socket> {
         return this.sessions;
+    }
+
+    getConnectedUsers(){
+        const connectedUser : Partial<CoupleEntity>[] =[]
+        this.sessions.forEach(
+            (socket)=>{
+                connectedUser.push(socket.couple)
+            }
+        )
+        return connectedUser
     }
 }

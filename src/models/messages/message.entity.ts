@@ -16,6 +16,10 @@ export class MessageEntity extends GeneralMessage{
     @OneToMany(
         ()=>MessageAttachmentEntity,
         msgAtt=>msgAtt.message,
+        {
+            cascade : true,
+            eager : true
+        }
     )
     attachment : MessageAttachmentEntity[]
 

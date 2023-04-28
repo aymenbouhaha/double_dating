@@ -26,6 +26,8 @@ export class Gateway implements OnGatewayConnection , OnGatewayDisconnect{
             username: client.couple.username,
             email : client.couple.email
         }
+        const connectedUser=this.gatewaySessionManager.getConnectedUsers()
+        client.emit("connectedUsers", connectedUser)
         this.server.emit("userConnected", payload)
     }
 
@@ -64,6 +66,11 @@ export class Gateway implements OnGatewayConnection , OnGatewayDisconnect{
         this.server.emit("onComment", payload)
     }
 
+
+    @OnEvent("like.delete")
+    handleDislike(payload: LikePostPayload){
+        this.server.emit("onDislike", payload)
+    }
 
 
 

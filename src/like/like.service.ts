@@ -53,10 +53,15 @@ export class LikeService {
             throw new PostNotFoundException()
         }
         try {
-            return await this.likeRepo.delete({
+            const deleted=await this.likeRepo.delete({
                 doer : doer,
                 post : post
             })
+            const payload : LikePostPayload={
+                doer : doer,
+                post : post
+            }
+            this.eventEmitter.emit("like.delete",payload)
         }catch (e){
             throw new ConflictException("Error Occured")
         }

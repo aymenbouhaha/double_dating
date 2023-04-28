@@ -22,7 +22,10 @@ export class PostEntity {
 
     @OneToMany(
         ()=>MediaEntity,
-        (img)=>img.post
+        (img)=>img.post,
+        {
+            cascade: true
+        }
     )
     medias : MediaEntity[]
 
