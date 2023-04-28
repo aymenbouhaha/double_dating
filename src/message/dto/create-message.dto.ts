@@ -1,4 +1,4 @@
-import {IsString} from "class-validator";
+import {IsNumber, IsString} from "class-validator";
 
 
 export class CreateMessageDto {
@@ -6,6 +6,7 @@ export class CreateMessageDto {
     @IsString()
     content : string
 
+    @IsNumber()
     recepientId : number
 
 }

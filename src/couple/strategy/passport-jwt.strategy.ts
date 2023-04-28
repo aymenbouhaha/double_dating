@@ -6,7 +6,6 @@ import {PayloadInterface} from "../interface/payload.interface";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
 import {CoupleEntity} from "../../models/couple.entity";
-import {UserNotVerifiedException} from "../exception/user-not-verified.exception";
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
