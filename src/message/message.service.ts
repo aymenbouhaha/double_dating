@@ -9,6 +9,8 @@ import {ConversationService} from "../conversation/conversation.service";
 import {CoupleEntity} from "../models/couple.entity";
 import {FriendService} from "../friend/friend.service";
 import {NotFriendException} from "../friend/exceptions/not-friend.exception";
+import {EventEmitter2} from "@nestjs/event-emitter";
+import {CreateMessagePayload} from "../gateway/event-payload/event-payload.interfaces";
 
 @Injectable()
 export class MessageService {
@@ -18,7 +20,8 @@ export class MessageService {
         private messageRepo : Repository<MessageEntity>,
         private coupleService : CoupleService,
         private conversationService : ConversationService,
-        private friendService : FriendService
+        private friendService : FriendService,
+        private eventEmitter: EventEmitter2
     ) {
     }
 
@@ -43,6 +46,12 @@ export class MessageService {
         try {
             const messageAdded =await this.messageRepo.save(newMessage)
             await this.conversationService.updateConversationLastMessage(messageAdded,conversation.id)
+            const payload : CreateMessagePayload={
+                message : messageAdded,
+                author : author,
+                recepient : recepientCouple
+            }
+            this.eventEmitter.emit("message.create",payload)
             return messageAdded
         } catch (e) {
             throw new ConflictException("Une erreur est survenue")

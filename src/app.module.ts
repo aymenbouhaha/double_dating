@@ -38,6 +38,9 @@ import {MailerModule} from "@nestjs-modules/mailer";
 import * as dotenv from 'dotenv';
 import {FriendEntity} from "./models/friend.entity";
 import { FriendModule } from './friend/friend.module';
+import {EventEmitterModule} from "@nestjs/event-emitter";
+import {LikeEntity} from "./models/like.entity";
+import { LikeModule } from './like/like.module';
 
 
 
@@ -67,6 +70,7 @@ dotenv.config()
               },
           }
       ),
+      EventEmitterModule.forRoot(),
     TypeOrmModule.forRoot({
         type: 'mysql',
         host: 'localhost',
@@ -75,6 +79,7 @@ dotenv.config()
         password: '',
         database: 'ppp',
         entities: [
+            LikeEntity,
             CommentEntity,
             ConversationEntity,
             CoupleEntity,
@@ -96,11 +101,13 @@ dotenv.config()
             FriendEntity
         ],
         synchronize: true,
+        // logging: true
     }),
     DateScheduleModule,
     DateRequestModule,
     GatewayModule,
-    FriendModule
+    FriendModule,
+    LikeModule
   ],
   controllers: [AppController],
   providers: [AppService ],

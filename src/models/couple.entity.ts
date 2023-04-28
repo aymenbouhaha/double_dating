@@ -37,10 +37,6 @@ export class CoupleEntity {
     @Column()
     anniversary : Date
 
-    @Column({
-        type : "boolean"
-    })
-    connected : boolean
 
     @Column()
     verificationCode : string

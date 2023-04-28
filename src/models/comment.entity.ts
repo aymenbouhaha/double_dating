@@ -26,7 +26,10 @@ export class CommentEntity {
     post : PostEntity
 
     @ManyToMany(
-        ()=>CommentEntity
+        ()=>CommentEntity,
+        {
+            cascade : true
+        }
     )
     @JoinTable({
         name : "responses"

@@ -1,5 +1,6 @@
 import {PersonDto} from "./person.dto";
 import {IsDateString, IsEmail, IsNotEmpty, IsNotEmptyObject, IsString} from "class-validator";
+import {Type} from "class-transformer";
 
 export class SignUpDto {
 
@@ -14,9 +15,9 @@ export class SignUpDto {
     @IsNotEmpty()
     password : string
 
-    @IsDateString()
+    @IsDateString({strict : true})
     @IsNotEmpty()
-    anniversary : Date
+    anniversary : string
 
     @IsNotEmptyObject()
     firstPartner : PersonDto

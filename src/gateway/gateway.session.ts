@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import {Socket} from "socket.io";
+import {AuthSocket} from "./auth-socket";
 
 @Injectable()
 export class GatewaySessionManager {
-    private readonly sessions: Map<number, Socket> = new Map();
+    private readonly sessions: Map<number, AuthSocket> = new Map();
 
     getUserSocket(id: number) {
         return this.sessions.get(id);
