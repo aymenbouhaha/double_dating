@@ -1,4 +1,4 @@
-import {ConflictException, Injectable, NotFoundException} from '@nestjs/common';
+import {BadRequestException, ConflictException, Injectable, NotFoundException} from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
 import {DateRequestEntity} from "../models/date/date-request.entity";
 import {DataSource, Repository} from "typeorm";
@@ -7,6 +7,7 @@ import {DateRequestDto} from "./dto/date-request.dto";
 import {CoupleService} from "../couple/couple.service";
 import {UserNotFoundException} from "../couple/exception/user-not-found.exception";
 import {DateScheduleEntity} from "../models/date/date-schedule.entity";
+import {DateRequestSenderDto} from "./dto/date-request-sender.dto";
 
 @Injectable()
 export class DateRequestService {
@@ -16,6 +17,26 @@ export class DateRequestService {
         private coupleService : CoupleService ,
         private dataSource : DataSource
     ) {
+    }
+    async SendDateRequest(sender : Partial<CoupleEntity> , dateRequestDto : DateRequestSenderDto ){
+    const reciever=await this.coupleService.findCoupleById(dateRequestDto.recieverId) ;
+    if(!reciever)
+        throw new UserNotFoundException()
+    const oldRequest=await this.findDateRequestByDate(sender,dateRequestDto.date) ;
+    if(oldRequest)
+        throw new BadRequestException('You already have a date on this date')
+    const request=this.dateRequestRepo.create( {
+        date : dateRequestDto.date ,
+        sender : sender ,
+        place : dateRequestDto.place ,
+        recipient : reciever
+    }) ;
+    try {
+        return await this.dateRequestRepo.save(request) ;
+        }
+    catch (e) {
+        throw new ConflictException("Une erreur est survenue veuillez réessayer")
+    }
     }
 
     async acceptDateRequest(reciever : Partial<CoupleEntity> , dateRequestDto : DateRequestDto ){
@@ -77,6 +98,17 @@ export class DateRequestService {
             place : place
         })
 
+    }
+    async findDateRequestByDate(sender : Partial<CoupleEntity>,date : string){
+        const newDate = new Date(date);
+        return await this.dateRequestRepo.findOneBy(
+            [
+                {
+                    sender : sender,
+                    date   : newDate
+                }
+            ]
+        )
     }
 
 

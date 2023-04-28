@@ -8,7 +8,7 @@ import {Repository} from "typeorm";
 
 @Injectable()
 export class PostService {
-    constructor( @InjectRepository(PostEntity) private postRepo :   Repository<PostEntity>,
+    constructor(
                  private coupleservice : CoupleService,
                  @InjectRepository(PostEntity)
                  private postRepo : Repository<PostEntity>

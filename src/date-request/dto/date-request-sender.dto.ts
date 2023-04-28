@@ -1,16 +1,15 @@
 import {IsDate, IsDateString, IsNotEmpty, IsPositive} from "class-validator";
 
-export class DateRequestDto {
+export class DateRequestSenderDto {
 
     @IsPositive()
-    senderId : number
-
-
+    recieverId : number
     @IsNotEmpty()
     place : string
 
-    @IsDateString()
-    date : Date
+    @IsDateString( {strict : true})
+    @IsNotEmpty()
+    date : string
 
 
 }
