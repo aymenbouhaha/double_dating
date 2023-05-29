@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import {InjectRepository} from "@nestjs/typeorm";
 import {FriendEntity} from "../models/friend.entity";
 import {Repository} from "typeorm";
-import {CoupleEntity} from "../models/couple.entity";
 
 @Injectable()
 export class FriendService {
@@ -19,7 +18,6 @@ export class FriendService {
                 {coupleOneId: coupleTwo, coupleTwoId: coupleOne}
             ]
         )
-        // c quoi !!friend  ?
         return !!friend
     }
 
@@ -39,14 +37,7 @@ export class FriendService {
         )
     }
 
-    async  Createfriend(coupleOne: CoupleEntity,coupleTwo : CoupleEntity) {
-        const friends= await this.friendRepo.create() ;
-        friends.coupleOne=coupleOne
-        friends.coupleTwo=coupleTwo
-        friends.coupleOneId=coupleOne.id
-        friends.coupleTwoId= coupleTwo.id
-        return this.friendRepo.save(friends) ;
-    }
+
 
 
 

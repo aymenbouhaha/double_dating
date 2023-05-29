@@ -13,7 +13,7 @@ export class DateRequestService {
     constructor(
         @InjectRepository(DateRequestEntity)
         private dateRequestRepo : Repository<DateRequestEntity>,
-        private coupleService : CoupleService ,
+        private coupleService : CoupleService,
         private dataSource : DataSource
     ) {
     }

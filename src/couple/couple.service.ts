@@ -1,8 +1,8 @@
-import {ConflictException, HttpStatus, Injectable} from '@nestjs/common';
+import {ConflictException, HttpStatus, Injectable, InternalServerErrorException, NotFoundException} from '@nestjs/common';
 import {SignUpDto} from "./dto/sign-up.dto";
 import {InjectRepository} from "@nestjs/typeorm";
 import {CoupleEntity} from "../models/couple.entity";
-import {Repository} from "typeorm";
+import {In, Not, Repository} from "typeorm";
 import {PersonEntity} from "../models/person.entity";
 import {PersonDto} from "./dto/person.dto";
 import * as bcrypt from 'bcrypt';
@@ -15,14 +15,22 @@ import {PasswordErrorException} from "./exception/password-error.exception";
 import {EmailNotSentException} from "./exception/email-not-sent.exception";
 import {VerifyCodeDto} from "./dto/verify-code.dto";
 import {VerificationFailedException} from "./exception/verification-failed.exception";
+import {CoupleProfileDto} from "./dto/coupleProfile.dto";
+import { RequestEntity } from 'src/models/request.entity';
+import { DateScheduleEntity } from 'src/models/date/date-schedule.entity';
 
 
 @Injectable()
 export class CoupleService {
+    dateScheduleRepository: any;
 
     constructor(
         @InjectRepository(CoupleEntity)  private coupleRepo : Repository<CoupleEntity>,
         @InjectRepository(PersonEntity) private personRepo : Repository<PersonEntity>,
+        @InjectRepository(RequestEntity) private requestRepo : Repository<RequestEntity>,
+        @InjectRepository(DateScheduleEntity) private dateScheduleRepo : Repository<DateScheduleEntity>,
+
+
         private jwtService : JwtService,
         private mailService : MailService
     ) {
@@ -116,13 +124,107 @@ export class CoupleService {
         }
     }
 
-    async findCoupleById(id : number)
-    {
+    async findCoupleById(id : number){
         return await this.coupleRepo.findOneBy({id : id})
     }
-    async saveCouple(couple: CoupleEntity)
-    {
-        return await this.coupleRepo.save(couple) ;
-    }
+
+    async searchCoupleByUsername(username: string): Promise<CoupleEntity | undefined> {
+        return this.coupleRepo.findOne({ where: { username } });
+      }
+      
+
+
+    async updateCouple(couple: CoupleEntity): Promise<CoupleEntity> {
+        try {
+          const id =couple.id;
+          const existingCouple = await this.coupleRepo.findOne({ where: { id } });
+          if (!existingCouple) {
+            throw new NotFoundException('Couple not found');
+          }
+      
+          // Update the properties of the existing couple entity
+          existingCouple.username = couple.username;
+          existingCouple.email = couple.email;
+          existingCouple.anniversary = couple.anniversary;
+          existingCouple.firstPartner = couple.firstPartner;
+          existingCouple.secondPartner = couple.secondPartner;
+          // Update other properties as needed
+      
+          const updatedCouple = await this.coupleRepo.save(existingCouple);
+          return updatedCouple;
+        } catch (error) {
+          // Handle any errors that occur during the update operation
+          throw new InternalServerErrorException('Failed to update couple', error);
+        }
+      }
+      
+
+    async getCoupleProfile(id: number): Promise<CoupleProfileDto> {
+        const couple = await this.coupleRepo.findOne({
+          where: { id },
+          relations: ['interests', 'friends', 'posts'],
+        });
+      
+        if (!couple) {
+          throw new NotFoundException('Couple not found');
+        }
+      
+        const coupleProfile: CoupleProfileDto = {
+          id: couple.id,
+          username: couple.username,
+          email: couple.email,
+          interests: couple.interest,
+          numberOfFriends: couple.friends.length,
+          posts: couple.posts,
+        };
+      
+        return coupleProfile;
+      }
+      
+
+      async getCoupleSuggestions(coupleId: number, selectedInterests: number[]): Promise<CoupleProfileDto[]> {
+        const suggestedCouples = await this.coupleRepo.find({
+          where: {
+            id: Not(coupleId), 
+            interest: In(selectedInterests), 
+          },
+          relations: ['interest'], 
+          take: 10, // Limit 
+        });
+      
+        return suggestedCouples.map((couple) => this.mapCoupleToProfileDto(couple));
+      }
+      
+      private mapCoupleToProfileDto(couple: CoupleEntity): CoupleProfileDto {
+        const coupleProfileDto = new CoupleProfileDto();
+        coupleProfileDto.id = couple.id;
+        coupleProfileDto.username = couple.username;
+        coupleProfileDto.email = couple.email;
+        coupleProfileDto.interests = couple.interest;
+        coupleProfileDto.numberOfFriends = couple.friends.length;
+        coupleProfileDto.posts = couple.posts;
+        
+      
+        return coupleProfileDto;
+      }
+      
+      async getReceivedInvitations(coupleId: number): Promise<RequestEntity[]> {
+        return this.requestRepo.find({
+          where: {
+            reciever: { id: coupleId },
+          },
+          relations: ['sender'], 
+        });
+      }
+      
+      async getAllDates(coupleId: number): Promise<DateScheduleEntity[]> {
+        return this.dateScheduleRepo.find({
+          where: [
+            { firstCouple: { id: coupleId } },
+            { secondCouple: { id: coupleId } },
+          ],
+        });
+      }
+      
 
 }

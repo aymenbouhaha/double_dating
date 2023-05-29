@@ -7,6 +7,7 @@ import {GroupConversationEntity} from "./group-conversation.entity";
 import {InterestEntity} from "./interest.entity";
 import {ProfilePictureEntity} from "./media/profile-picture.entity";
 import {Exclude} from "class-transformer";
+import {FriendEntity} from "./friend.entity";
 
 @Entity("couple")
 export class CoupleEntity {
@@ -26,17 +27,21 @@ export class CoupleEntity {
     })
     email : string
 
-    @Exclude()
     @Column()
+    @Exclude()
     password : string
 
-    @Exclude()
     @Column()
+    @Exclude()
     salt :string
 
     @Column()
     anniversary : Date
 
+    @Column({
+        type : "boolean"
+    })
+    connected : boolean
 
     @Column()
     verificationCode : string
@@ -111,4 +116,8 @@ export class CoupleEntity {
         name : "interests"
     })
     interest : InterestEntity[]
+
+    @OneToMany(() => FriendEntity, friend => friend.coupleOne)
+    friends: FriendEntity[];
+
 }

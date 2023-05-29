@@ -23,7 +23,7 @@ import {PersonEntity} from "./models/person.entity";
 import {PostEntity} from "./models/post.entity";
 import {RequestEntity} from "./models/request.entity";
 import {MessageEntity} from "./models/messages/message.entity";
-import {ConfigModule} from "@nestjs/config";
+import {ConfigModule, ConfigService} from "@nestjs/config";
 import {DateScheduleEntity} from "./models/date/date-schedule.entity";
 import {DateRequestEntity} from "./models/date/date-request.entity";
 import {NotificationEntity} from "./models/notification.entity";
@@ -38,10 +38,6 @@ import {MailerModule} from "@nestjs-modules/mailer";
 import * as dotenv from 'dotenv';
 import {FriendEntity} from "./models/friend.entity";
 import { FriendModule } from './friend/friend.module';
-import {EventEmitterModule} from "@nestjs/event-emitter";
-import {LikeEntity} from "./models/like.entity";
-import { LikeModule } from './like/like.module';
-
 
 
 dotenv.config()
@@ -70,46 +66,42 @@ dotenv.config()
               },
           }
       ),
-      EventEmitterModule.forRoot(),
     TypeOrmModule.forRoot({
-        type: 'mysql',
-        host: 'localhost',
-        port: 3306,
-        username: 'root',
-        password: '',
-        database: 'ppp',
-        entities: [
-            LikeEntity,
-            CommentEntity,
-            ConversationEntity,
-            CoupleEntity,
-            GroupConversationEntity,
-            GroupMessageEntity,
-            MediaEntity,
-            InterestEntity,
-            PersonEntity,
-            MessageEntity,
-            PostEntity,
-            RequestEntity,
-            DateScheduleEntity,
-            DateRequestEntity,
-            NotificationEntity,
-            GroupMessageAttachmentEntity,
-            MessageAttachmentEntity,
-            GroupPictureEntity,
-            ProfilePictureEntity,
-            FriendEntity
-        ],
-        synchronize: true,
-        // logging: true
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: '',
+      database: 'ppp',
+      entities: [
+          CommentEntity,
+          ConversationEntity,
+          CoupleEntity,
+          GroupConversationEntity,
+          GroupMessageEntity,
+          MediaEntity,
+          InterestEntity,
+          PersonEntity,
+          MessageEntity,
+          PostEntity,
+          RequestEntity,
+          DateScheduleEntity,
+          DateRequestEntity,
+          NotificationEntity,
+          GroupMessageAttachmentEntity,
+          MessageAttachmentEntity,
+          GroupPictureEntity,
+          ProfilePictureEntity,
+          FriendEntity
+      ],
+      synchronize: true,
     }),
     DateScheduleModule,
     DateRequestModule,
     GatewayModule,
-    FriendModule,
-    LikeModule
+    FriendModule
   ],
   controllers: [AppController],
-  providers: [AppService ],
+  providers: [AppService],
 })
 export class AppModule {}

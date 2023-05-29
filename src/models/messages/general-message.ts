@@ -1,7 +1,6 @@
 import {Column, CreateDateColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {CoupleEntity} from "../couple.entity";
 
-
 export enum MessageStatus {
     seen = "seen",
     unseen = "unseen"
@@ -30,14 +29,8 @@ export abstract class GeneralMessage {
     creationDate : Date
 
     @ManyToOne(
-        () => CoupleEntity,
-        {
-            eager : true,
-
-        }
+        () => CoupleEntity
     )
     author : CoupleEntity
-
-
 
 }

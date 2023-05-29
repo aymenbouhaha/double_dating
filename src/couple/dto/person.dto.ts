@@ -1,5 +1,4 @@
 import {IsDateString, IsNotEmpty, IsPhoneNumber, IsString} from "class-validator";
-import {Type} from "class-transformer";
 
 export class PersonDto {
 
@@ -15,8 +14,8 @@ export class PersonDto {
     @IsNotEmpty()
     phoneNumber : string
 
-    @IsDateString({strict : true})
+    @IsDateString()
     @IsNotEmpty()
-    birthDate : string
+    birthDate : Date
 
 }

@@ -8,14 +8,14 @@ export class MessageEntity extends GeneralMessage{
 
     @ManyToOne(
         () => ConversationEntity,
-        (cnv)=>cnv.messages,
+        (cnv)=>cnv.messages
     )
     conversation : ConversationEntity
 
 
     @OneToMany(
         ()=>MessageAttachmentEntity,
-        msgAtt=>msgAtt.message,
+        msgAtt=>msgAtt.message
     )
     attachment : MessageAttachmentEntity[]
 
